@@ -13,8 +13,8 @@ const LocationMarker = ({ lat, lng, type, onClick}) => {
         locationIcon = volcanoIcon
     }
     return (
-        <div className="location-marker" onClick={onClick}>
-            <Icon icon={locationIcon} className="location-icon" />
+        <div onClick={onClick}>
+            <Icon icon={locationIcon} className={type} />
         </div>
     )
 }

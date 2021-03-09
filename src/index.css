@@ -11,9 +11,19 @@ body {
   position: relative;
 }
 
-.location-icon {
+.wildfire {
   font-size: 2rem;
   color: orange;
+}
+
+.volcano {
+  font-size: 2rem;
+  color: red;
+}
+
+.storm {
+  font-size: 2rem;
+  color:darkgray
 }
 
 .location-info {
@@ -36,4 +46,21 @@ body {
 
 .location-info li {
   padding: 5px 0;
+}
+
+.event-filter {
+  position: absolute;
+  top: 80px;
+  left: 50px;
+  width: 300px;
+  min-height: 200px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  font-size: 18px;
+  color: #fff;
+}
+
+.tab {
+  margin-left: 20px;  
 }
