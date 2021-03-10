@@ -2,19 +2,33 @@ import { useState } from 'react'
 import GoogleMapReact from 'google-map-react'
 import LocationMarker from './LocationMarker'
 import LocationInfo from './LocationInfo'
-import EventFilter from './EventFilter'
+import { AllCheckerCheckbox, Checkbox, CheckboxGroup } from '@createnl/grouped-checkboxes';
+
+var filteredEvents = []
+
+function getFilteredEvents(onChange) {
+    filteredEvents = [];
+    for(var i=0; i<onChange.length; i++) {
+        if (onChange[i].checked) {
+            filteredEvents.push(onChange[i].value)
+        }
+    }
+    console.log(filteredEvents)
+}
 
 const EventMap = ({ center, zoom, eventData }) => {
+    const [onChange, setOnChange] = useState({});
     const [locationInfo, setLocationInfo] = useState(null)
 
-    const events = eventData.map(ev => {
-        if (ev.categories[0].id === 8) {
+    var events = eventData.map(ev => {
+        // console.log(filteredEvents.includes(ev.categories[0].title.toString()))
+        if (ev.categories[0].id === 8 && filteredEvents.includes(ev.categories[0].title.toString())) {
             return <LocationMarker key={ev.id} lat={ev.geometries[0].coordinates[1]} lng={ev.geometries[0].coordinates[0]} type="wildfire" 
                     onClick={() => setLocationInfo({id: ev.id, title: ev.title})}    />
-        } else if (ev.categories[0].id === 10) {
+        } else if (ev.categories[0].id === 10 && filteredEvents.includes(ev.categories[0].title.toString())) {
             return <LocationMarker key={ev.id} lat={ev.geometries[0].coordinates[1]} lng={ev.geometries[0].coordinates[0]} type="storm" 
             onClick={() => setLocationInfo({id: ev.id, title: ev.title})}    />
-        } else if (ev.categories[0].id === 12) {
+        } else if (ev.categories[0].id === 12 && filteredEvents.includes(ev.categories[0].title.toString())) {
             if (ev.geometries[0].coordinates.length === 1) {
                 ev.geometries[0].coordinates.forEach(coord => {
                     return <LocationMarker key={ev.id} lat={coord[1]} lng={coord[0]} type="volcano" 
@@ -28,6 +42,7 @@ const EventMap = ({ center, zoom, eventData }) => {
         }
         return null;
     })
+
     return (
         <div className="map">
             <GoogleMapReact
@@ -37,10 +52,24 @@ const EventMap = ({ center, zoom, eventData }) => {
             >
                 {events}
             </GoogleMapReact>
-            <EventFilter />
-            
+            <div className="event-filter">
+            <h2>Event Filter</h2>
+            <CheckboxGroup onClick={getFilteredEvents(onChange)} onChange={setOnChange} defaultChecked>
+                <AllCheckerCheckbox/>
+                <span>All</span>
+                <br />
+                <Checkbox className="tab" value="Wildfires" />
+                <span>Wildfire</span>
+                <br />
+                <Checkbox className="tab" value="Severe Storms" />
+                <span>Severe Storm</span>
+                <br />
+                <Checkbox className="tab" value="Volcanoes" />
+                <span>Volcano</span>
+                <br />
+            </CheckboxGroup>
+            </div>
             {locationInfo && <LocationInfo info={locationInfo} />}
-            
         </div>
     )
 }
