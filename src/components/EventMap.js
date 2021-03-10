@@ -39,6 +39,12 @@ const EventMap = ({ center, zoom, eventData }) => {
                 return <LocationMarker key={ev.id} lat={ev.geometries[0].coordinates[1]} lng={ev.geometries[0].coordinates[0]} type="volcano" 
                 onClick={() => setLocationInfo({id: ev.id, title: ev.title})}    />    
             }
+        } else if (ev.categories[0].id === 16 && filteredEvents.includes(ev.categories[0].title.toString())) {
+            return <LocationMarker key={ev.id} lat={ev.geometries[0].coordinates[1]} lng={ev.geometries[0].coordinates[0]} type="earthquake" 
+            onClick={() => setLocationInfo({id: ev.id, title: ev.title})}    />
+        } else if (ev.categories[0].id === 15 && filteredEvents.includes(ev.categories[0].title.toString())) {
+            return <LocationMarker key={ev.id} lat={ev.geometries[0].coordinates[1]} lng={ev.geometries[0].coordinates[0]} type="earthquake" 
+            onClick={() => setLocationInfo({id: ev.id, title: ev.title})}    />
         }
         return null;
     })
@@ -54,7 +60,7 @@ const EventMap = ({ center, zoom, eventData }) => {
             </GoogleMapReact>
             <div className="event-filter">
             <h2>Event Filter</h2>
-            <CheckboxGroup onClick={getFilteredEvents(onChange)} onChange={setOnChange} defaultChecked>
+            <CheckboxGroup className="checkbox-list" onClick={getFilteredEvents(onChange)} onChange={setOnChange} defaultChecked>
                 <AllCheckerCheckbox/>
                 <span>All</span>
                 <br />
@@ -66,6 +72,12 @@ const EventMap = ({ center, zoom, eventData }) => {
                 <br />
                 <Checkbox className="tab" value="Volcanoes" />
                 <span>Volcano</span>
+                <br />
+                <Checkbox className="tab" value="Earthquakes" />
+                <span>Earthquake</span>
+                <br />
+                <Checkbox className="tab" value="Sea and Lake Ice" />
+                <span>Sea and Lake Ice</span>
                 <br />
             </CheckboxGroup>
             </div>
