@@ -21,28 +21,25 @@ const EventMap = ({ center, zoom, eventData }) => {
     const [locationInfo, setLocationInfo] = useState(null)
 
     var events = eventData.map(ev => {
-        if (ev.categories[0].id === 8 && filteredEvents.includes(ev.categories[0].title.toString())) {
-            return <LocationMarker key={ev.id} lat={ev.geometries[0].coordinates[1]} lng={ev.geometries[0].coordinates[0]} type="wildfire" 
+        if (ev.categories[0].id === 'wildfires' && filteredEvents.includes(ev.categories[0].title.toString())) {
+            return <LocationMarker key={ev.id} lat={ev.geometry[0].coordinates[1]} lng={ev.geometry[0].coordinates[0]} type="wildfire" 
                     onClick={() => setLocationInfo({id: ev.id, title: ev.title})}    />
-        } else if (ev.categories[0].id === 10 && filteredEvents.includes(ev.categories[0].title.toString())) {
-            return <LocationMarker key={ev.id} lat={ev.geometries[0].coordinates[1]} lng={ev.geometries[0].coordinates[0]} type="storm" 
+        } else if (ev.categories[0].id === 'severeStorms' && filteredEvents.includes(ev.categories[0].title.toString())) {
+            return <LocationMarker key={ev.id} lat={ev.geometry[0].coordinates[1]} lng={ev.geometry[0].coordinates[0]} type="storm" 
             onClick={() => setLocationInfo({id: ev.id, title: ev.title})}    />
-        } else if (ev.categories[0].id === 12 && filteredEvents.includes(ev.categories[0].title.toString())) {
-            if (ev.geometries[0].coordinates.length === 1) {
-                ev.geometries[0].coordinates.forEach(coord => {
+        } else if (ev.categories[0].id === 'volcanoes' && filteredEvents.includes(ev.categories[0].title.toString())) {
+            if (ev.geometry[0].coordinates.length === 1) {
+                ev.geometry[0].coordinates.forEach(coord => {
                     return <LocationMarker key={ev.id} lat={coord[1]} lng={coord[0]} type="volcano" 
                     onClick={() => setLocationInfo({id: ev.id, title: ev.title})}    />        
                 });
 
             } else {
-                return <LocationMarker key={ev.id} lat={ev.geometries[0].coordinates[1]} lng={ev.geometries[0].coordinates[0]} type="volcano" 
+                return <LocationMarker key={ev.id} lat={ev.geometry[0].coordinates[1]} lng={ev.geometry[0].coordinates[0]} type="volcano" 
                 onClick={() => setLocationInfo({id: ev.id, title: ev.title})}    />    
             }
-        } else if (ev.categories[0].id === 16 && filteredEvents.includes(ev.categories[0].title.toString())) {
-            return <LocationMarker key={ev.id} lat={ev.geometries[0].coordinates[1]} lng={ev.geometries[0].coordinates[0]} type="earthquake" 
-            onClick={() => setLocationInfo({id: ev.id, title: ev.title})}    />
-        } else if (ev.categories[0].id === 15 && filteredEvents.includes(ev.categories[0].title.toString())) {
-            return <LocationMarker key={ev.id} lat={ev.geometries[0].coordinates[1]} lng={ev.geometries[0].coordinates[0]} type="earthquake" 
+        } else if (ev.categories[0].id === 'earthquake' && filteredEvents.includes(ev.categories[0].title.toString())) {
+            return <LocationMarker key={ev.id} lat={ev.geometry[0].coordinates[1]} lng={ev.geometry[0].coordinates[0]} type="earthquake" 
             onClick={() => setLocationInfo({id: ev.id, title: ev.title})}    />
         }
         return null;
