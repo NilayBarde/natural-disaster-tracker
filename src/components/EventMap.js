@@ -23,24 +23,21 @@ const EventMap = ({ center, zoom, eventData }) => {
     var events = eventData.map(ev => {
         if (ev.categories[0].id === 'wildfires' && filteredEvents.includes(ev.categories[0].title.toString())) {
             return <LocationMarker key={ev.id} lat={ev.geometry[0].coordinates[1]} lng={ev.geometry[0].coordinates[0]} type="wildfire" 
-                    onClick={() => setLocationInfo({id: ev.id, title: ev.title})}    />
+                    onClick={() => setLocationInfo({id: ev.id, title: ev.title, date: ev.geometry[0].date.substring(0, 10)})}    />
         } else if (ev.categories[0].id === 'severeStorms' && filteredEvents.includes(ev.categories[0].title.toString())) {
             return <LocationMarker key={ev.id} lat={ev.geometry[0].coordinates[1]} lng={ev.geometry[0].coordinates[0]} type="storm" 
-            onClick={() => setLocationInfo({id: ev.id, title: ev.title})}    />
+            onClick={() => setLocationInfo({id: ev.id, title: ev.title, date: ev.geometry[0].date.substring(0, 10)})}    />        
         } else if (ev.categories[0].id === 'volcanoes' && filteredEvents.includes(ev.categories[0].title.toString())) {
             if (ev.geometry[0].coordinates.length === 1) {
                 ev.geometry[0].coordinates.forEach(coord => {
                     return <LocationMarker key={ev.id} lat={coord[1]} lng={coord[0]} type="volcano" 
-                    onClick={() => setLocationInfo({id: ev.id, title: ev.title})}    />        
+                    onClick={() => setLocationInfo({id: ev.id, title: ev.title, date: ev.geometry[0].date.substring(0, 10)})}    />        
                 });
 
             } else {
                 return <LocationMarker key={ev.id} lat={ev.geometry[0].coordinates[1]} lng={ev.geometry[0].coordinates[0]} type="volcano" 
-                onClick={() => setLocationInfo({id: ev.id, title: ev.title})}    />    
+                onClick={() => setLocationInfo({id: ev.id, title: ev.title, date: ev.geometry[0].date.substring(0, 10)})}    />    
             }
-        } else if (ev.categories[0].id === 'earthquake' && filteredEvents.includes(ev.categories[0].title.toString())) {
-            return <LocationMarker key={ev.id} lat={ev.geometry[0].coordinates[1]} lng={ev.geometry[0].coordinates[0]} type="earthquake" 
-            onClick={() => setLocationInfo({id: ev.id, title: ev.title})}    />
         }
         return null;
     })
@@ -68,9 +65,6 @@ const EventMap = ({ center, zoom, eventData }) => {
                 <br />
                 <Checkbox className="tab" value="Volcanoes" />
                 <span>Volcano</span>
-                <br />
-                <Checkbox className="tab" value="Earthquakes" />
-                <span>Earthquake</span>
                 <br />
             </CheckboxGroup>
             </div>
