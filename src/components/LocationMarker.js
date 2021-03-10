@@ -3,7 +3,6 @@ import fireIcon from '@iconify/icons-mdi/fire-alert'
 import stormIcon from '@iconify/icons-mdi/weather-lightning-rainy'
 import volcanoIcon from '@iconify-icons/wi/volcano'
 import earthquakeIcon from '@iconify-icons/wi/earthquake'
-import iceIcon from '@iconify-icons/carbon/ice-accretion'
 
 const LocationMarker = ({ lat, lng, type, onClick}) => {
     var locationIcon

@@ -21,7 +21,6 @@ const EventMap = ({ center, zoom, eventData }) => {
     const [locationInfo, setLocationInfo] = useState(null)
 
     var events = eventData.map(ev => {
-        // console.log(filteredEvents.includes(ev.categories[0].title.toString()))
         if (ev.categories[0].id === 8 && filteredEvents.includes(ev.categories[0].title.toString())) {
             return <LocationMarker key={ev.id} lat={ev.geometries[0].coordinates[1]} lng={ev.geometries[0].coordinates[0]} type="wildfire" 
                     onClick={() => setLocationInfo({id: ev.id, title: ev.title})}    />
@@ -52,7 +51,7 @@ const EventMap = ({ center, zoom, eventData }) => {
     return (
         <div className="map">
             <GoogleMapReact
-                bootstrapURLKeys= {{key: "AIzaSyBzARZuhUJBJiNRO8T16Ir3thRMDqWrUpI" }}
+                bootstrapURLKeys= {{key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
                 defaultCenter= { center }
                 defaultZoom = { zoom }
             >
@@ -75,9 +74,6 @@ const EventMap = ({ center, zoom, eventData }) => {
                 <br />
                 <Checkbox className="tab" value="Earthquakes" />
                 <span>Earthquake</span>
-                <br />
-                <Checkbox className="tab" value="Sea and Lake Ice" />
-                <span>Sea and Lake Ice</span>
                 <br />
             </CheckboxGroup>
             </div>
